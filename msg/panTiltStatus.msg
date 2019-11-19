@@ -1,0 +1,4 @@
+uint16 pan_position
+uint16 pan_speed
+uint16 tilt_position
+uint16 tilt_speed

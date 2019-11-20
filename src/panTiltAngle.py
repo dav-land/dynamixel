@@ -23,6 +23,10 @@ class Node():
         rospy.Subscriber('pan_goal_angle', Float32, self.onPanAngle)
         rospy.Subscriber('tilt_goal_angle', Float32, self.onTiltAngle)
         self.control = panTiltControl();
+        self.control.pan_max_speed = 0;
+        self.control.pan_torque = True;
+        self.control.tilt_max_speed = 0;
+        self.control.tilt_torque = True;
         rate = rospy.Rate(5) # 10hz
         while not rospy.is_shutdown():
             self.control.pan_position = self.panTickVal;

@@ -1,10 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python                                                                               
 
 import rospy
 from std_msgs.msg import Int16
 from std_msgs.msg import Float32
-from dynamixel.msg import panTiltControl
-from dynamixel.msg import panTiltInternalControl
+from dynamixel.msg import panTiltStatus
+from dynamixel.msg import panTiltInternalStatus
 
 class Node():
     def __init__(self):
@@ -15,21 +15,21 @@ class Node():
         self.panMaxSpeed = 0;
         self.tiltMaxSpeed = 0;
 
-    def onPanTiltControl(self,data):
-        self.panTickVal   = int((data.pan_position/360)*4095)
-        self.tiltTickVal  = int((data.tilt_position/360)*4095 + 1024)
+    def onPanTiltInternalStatus(self,data):
+        self.panTickVal   = (float(data.pan_position)/4095)*360
+        self.tiltTickVal  = (float(data.tilt_position - 1024)/4095)*360
         self.panTorque    = data.pan_torque
         self.tiltTorque   = data.tilt_torque
-        self.panMaxSpeed  = int((data.pan_max_speed/116.62)*1023)
-        self.tiltMaxSpeed = int((data.tilt_max_speed/116.62)*1023)
+        self.panMaxSpeed  = (float(data.pan_max_speed)/1023)*116.62
+        self.tiltMaxSpeed = (float(data.tilt_max_speed)/1023)*116.62
 
 
-    def panTiltAngle(self):
-        self.panTiltTick = rospy.Publisher('/pan_tilt_internal_control', panTiltInternalControl, queue_size=1)
-        
-        rospy.Subscriber('pan_tilt_control', panTiltControl, self.onPanTiltControl)
-        self.control = panTiltInternalControl();
-        rate = rospy.Rate(5) # 5hz
+    def convertStatus(self):
+        self.panTiltTick = rospy.Publisher('/pan_tilt_status', panTiltStatus, queue_size=1)
+
+        rospy.Subscriber('pan_tilt_internal_status', panTiltInternalStatus, self.onPanTiltInternalStatus)
+        self.control = panTiltStatus();
+        rate = rospy.Rate(20) # 20hz 
         while not rospy.is_shutdown():
             self.control.pan_position = self.panTickVal;
             self.control.tilt_position = self.tiltTickVal;
@@ -43,8 +43,8 @@ class Node():
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('panTiltAngle', anonymous=True)
+        rospy.init_node('convertStatus', anonymous=True)
         node = Node()
-        node.panTiltAngle()
+        node.convertStatus()
     except rospy.ROSInterruptException:
         pass

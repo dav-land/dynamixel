@@ -6,5 +6,6 @@
 	</node>
 	
 	<node pkg="dynamixel" name="panTiltAngle" type="panTiltAngle.py" output="screen"/>
+	<node pkg="dynamixel" name="convertStatus" type="convertStatus.py" output="screen"/>
 
 </launch>

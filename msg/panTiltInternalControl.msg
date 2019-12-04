@@ -1,0 +1,6 @@
+uint16 pan_position
+uint16 pan_max_speed
+bool pan_torque
+uint16 tilt_position
+uint16 tilt_max_speed
+bool tilt_torque

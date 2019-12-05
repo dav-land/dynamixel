@@ -3,7 +3,7 @@
 import rospy
 from std_msgs.msg import Int16
 from std_msgs.msg import Float32
-from dynamixel.msg import panTiltControl
+from dynamixel_msg.msg import PanTiltControl
 
 class Node():
     def __init__(self):
@@ -12,7 +12,7 @@ class Node():
 
    
     def panTiltAngle(self):
-        self.panTilt = rospy.Publisher('pan_tilt_control', panTiltControl, queue_size=1)
+        self.panTilt = rospy.Publisher('pan_tilt_control', PanTiltControl, queue_size=1)
         rate = rospy.Rate(5) # 10hz
         negative_pan = 1
         negative_tilt = 1
@@ -29,7 +29,7 @@ class Node():
 
                 self.tiltTickVal = self.tiltTickVal + 20*negative_tilt
 
-            self.control = panTiltControl();
+            self.control = PanTiltControl();
             self.control.pan_position = self.panTickVal;
             self.control.tilt_position = self.tiltTickVal;
             self.control.pan_torque = True;

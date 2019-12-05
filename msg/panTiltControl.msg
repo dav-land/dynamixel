@@ -1,6 +1,0 @@
-float32 pan_position
-float32 pan_max_speed
-bool pan_torque
-float32 tilt_position
-float32 tilt_max_speed
-bool tilt_torque

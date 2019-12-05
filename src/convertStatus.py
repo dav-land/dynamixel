@@ -3,8 +3,8 @@
 import rospy
 from std_msgs.msg import Int16
 from std_msgs.msg import Float32
-from dynamixel.msg import panTiltStatus
-from dynamixel.msg import panTiltInternalStatus
+from dynamixel_msg.msg import PanTiltStatus
+from dynamixel_msg.msg import PanTiltInternalStatus
 
 class Node():
     def __init__(self):
@@ -25,10 +25,10 @@ class Node():
 
 
     def convertStatus(self):
-        self.panTiltTick = rospy.Publisher('/pan_tilt_status', panTiltStatus, queue_size=1)
+        self.panTiltTick = rospy.Publisher('/pan_tilt_status', PanTiltStatus, queue_size=1)
 
-        rospy.Subscriber('pan_tilt_internal_status', panTiltInternalStatus, self.onPanTiltInternalStatus)
-        self.control = panTiltStatus();
+        rospy.Subscriber('pan_tilt_internal_status', PanTiltInternalStatus, self.onPanTiltInternalStatus)
+        self.control = PanTiltStatus();
         rate = rospy.Rate(20) # 20hz 
         while not rospy.is_shutdown():
             self.control.pan_position = self.panTickVal;

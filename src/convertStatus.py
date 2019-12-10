@@ -29,7 +29,7 @@ class Node():
 
         rospy.Subscriber('pan_tilt_internal_status', PanTiltInternalStatus, self.onPanTiltInternalStatus)
         self.control = PanTiltStatus();
-        rate = rospy.Rate(20) # 20hz 
+        rate = rospy.Rate(60) # 20hz 
         while not rospy.is_shutdown():
             self.control.pan_position = self.panTickVal;
             self.control.tilt_position = self.tiltTickVal;

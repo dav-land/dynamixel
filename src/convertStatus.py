@@ -31,6 +31,7 @@ class Node():
         self.control = PanTiltStatus();
         rate = rospy.Rate(60) # 20hz 
         while not rospy.is_shutdown():
+            self.control.header.stamp = rospy.Time.now();
             self.control.pan_position = self.panTickVal;
             self.control.tilt_position = self.tiltTickVal;
             self.control.pan_max_speed = self.panMaxSpeed;

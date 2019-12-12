@@ -8,7 +8,7 @@ from dynamixel_msg.msg import PanTiltControl
 class Node():
     def __init__(self):
         self.panTickVal = 20
-        self.tiltTickVal = 140
+        self.tiltTickVal = 20
 
    
     def panTiltAngle(self):
@@ -30,6 +30,7 @@ class Node():
                 self.tiltTickVal = self.tiltTickVal + 20*negative_tilt
 
             self.control = PanTiltControl();
+            self.control.header.stamp = rospy.Time.now();
             self.control.pan_position = self.panTickVal;
             self.control.tilt_position = self.tiltTickVal;
             self.control.pan_torque = True;
